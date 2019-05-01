@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".DrawFragment">
 
-    <com.example.alterwearapp.CustomView
+    <com.example.alterwearfragments.CustomView
         android:id="@+id/customView"
         android:layout_width="390dp"
         android:layout_height="450dp" />

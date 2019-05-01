@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.example.alterwearapp"
+    xmlns:app="http://schemas.android.com/apk/res/com.example.alterwearfragments"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.alterwearapp.CustomView
+    <com.example.alterwearfragments.CustomView
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:background="#ccc"
