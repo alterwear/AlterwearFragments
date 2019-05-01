@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DrawFragment">
+
+    <com.example.alterwearapp.CustomView
+        android:id="@+id/customView"
+        android:layout_width="390dp"
+        android:layout_height="450dp" />
+
+    <Button
+        android:id="@+id/send_button"
+        android:layout_width="99dp"
+        android:layout_height="58dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="452dp"
+        android:text="Send" />
+
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="99dp"
+        android:layout_height="58dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="452dp"
+        android:text="Clear" />
+
+</FrameLayout>
