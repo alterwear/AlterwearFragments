@@ -8,8 +8,9 @@
 
     <com.example.alterwearfragments.CustomView
         android:id="@+id/customView"
-        android:layout_width="390dp"
-        android:layout_height="450dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"/>
 
     <Button
         android:id="@+id/send_button"

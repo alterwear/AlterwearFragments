@@ -34,12 +34,18 @@ public class CameraFragment extends Fragment {
     private Bitmap mImageBitmap;
     private String mCurrentPhotoPath;
     private ImageView mImageView;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "camera";
     private static final int CAMERA_REQUEST = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     public CameraFragment() {
         // Required empty public constructor
+    }
+
+    public static CameraFragment getInstance() {
+        CameraFragment fragment = new CameraFragment();
+        fragment.setRetainInstance(true);
+        return fragment;
     }
 
     @Override
@@ -92,11 +98,33 @@ public class CameraFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            Bitmap photoBW = processingBitmap(photo);
+            Bitmap croppedPhoto;
+
+            if (photo.getWidth() >= photo.getHeight()){
+                croppedPhoto = Bitmap.createBitmap(
+                        photo,
+                        photo.getWidth()/2 - photo.getHeight()/2,
+                        0,
+                        photo.getHeight(),
+                        photo.getHeight()
+                );
+
+            }else{
+                croppedPhoto = Bitmap.createBitmap(
+                        photo,
+                        0,
+                        photo.getHeight()/2 - photo.getWidth()/2,
+                        photo.getWidth(),
+                        photo.getWidth()
+                );
+            }
+
+
+            Bitmap photoBW = processingBitmap(croppedPhoto);
 
             //edge detection code
             Mat rgba = new Mat();
-            Utils.bitmapToMat(photo, rgba);
+            Utils.bitmapToMat(croppedPhoto, rgba);
 
             Mat edges = new Mat(rgba.size(), CvType.CV_8UC1);
             Imgproc.cvtColor(rgba, edges, Imgproc.COLOR_RGB2GRAY, 4);
@@ -128,5 +156,7 @@ public class CameraFragment extends Fragment {
         }
         return dest;
     }
+
+
 
 }

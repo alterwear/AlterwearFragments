@@ -9,6 +9,8 @@ import android.widget.Button;
 
 public class DrawFragment extends Fragment {
 
+    private static final String TAG = "draw";
+
 
     public DrawFragment() {
         // Required empty public constructor
@@ -26,10 +28,6 @@ public class DrawFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_draw, container, false);
-
-        //let's keep a reference of DrawView
-//        drawView = (DrawView ) _view.findViewById(R.id.drawing);
-//        return _view;
 
         return v;
     }

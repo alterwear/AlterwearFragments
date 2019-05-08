@@ -1,8 +1,10 @@
 package com.example.alterwearfragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     private DrawFragment drawFragment;
+    private CameraFragment cameraFragment;
+    private TextFragment textFragment;
+
+    private Bitmap canvasBitmap;
+
     private TextView mTextMessage;
 
     private BottomNavigationView nav;
@@ -24,14 +31,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_draw:
-                    startDrawFragment();
+                    displayDrawFragment();
                     return true;
                 case R.id.navigation_camera:
-                    startCameraFragment();
+                    displayCameraFragment();
                     return true;
                 case R.id.navigation_text:
-//                    mTextMessage.setText(R.string.title_text);
-                    startTextFragment();
+                    displayTextFragment();
                     return true;
             }
             return false;
@@ -47,100 +53,61 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        startDrawFragment();
-//        onTabSelected(0, false);
+        if (savedInstanceState == null) {
+            drawFragment = DrawFragment.getInstance();
+            cameraFragment = CameraFragment.getInstance();
+            textFragment = TextFragment.getInstance();
+        }
+
+        displayDrawFragment();
     }
 
-//    @Override
-//    public void onTabSelected(int position, boolean wasSelected) {
-//        // Pop off everything up to and including the current tab
-//        FragmentManager fManager = getSupportFragmentManager();
-//        FragmentTransaction fTransaction = fManager.beginTransaction();
-//        fManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//
-//        // Add the new tab fragment
-//        fTransaction.replace(R.id.fragment, TabFragment.newInstance(position + 1), String.valueOf(position))
-//                .addToBackStack(BACK_STACK_ROOT_TAG)
-//                .commit();
-//    }
-
-//    /**
-//     * Add a fragment on top of the current stack
-//     */
-//    public void addFragmentOnTop(Fragment fragment) {
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.container, fragment)
-//                .addToBackStack(null)
-//                .commit();
-//    }
-
-//    @Override
-//    public void onBackPressed() {
-//        FragmentManager fragments = getSupportFragmentManager();
-//        Fragment homeFrag = fragments.findFragmentByTag("0");
-//
-//        if (fragments.getBackStackEntryCount() > 1) {
-//            // We have fragments on the backstack that are poppable
-//            fragments.popBackStackImmediate();
-//        } else if (homeFrag == null || !homeFrag.isVisible()) {
-//            // We aren't showing the home screen, so that is the next stop on the back journey
-//            nav.setCurrentItem(0);
-//        } else {
-//            // We are already showing the home screen, so the next stop is out of the app.
-//            supportFinishAfterTransition();
-//        }
-//    }
-
-    /** Called when the user taps the Draw button */
-    public void startDrawFragment() {
-        // Do something in response to button
-
-        // Begin the transaction
-        FragmentManager fManager = getSupportFragmentManager();
-        FragmentTransaction fTransaction = fManager.beginTransaction();
-
-        // Now later we can lookup the fragment by tag
-//        DrawFragment drawFragment = (DrawFragment) fManager.findFragmentByTag("draw");
-
-        // set Draw Fragment
-        drawFragment = DrawFragment.getInstance();
-//        fTransaction.add(R.id.fragment, drawFragment, "draw");
-
-        // Let's first dynamically add a fragment into a frame container
-//        ft.replace(R.id.fragment, drawFragment);
-
-        // Complete the changes added above
-        fTransaction.commit();
-
-
-
-    }
-
-    /** Called when the user taps the Camera button */
-    public void startCameraFragment() {
-        // Do something in response to button
-
-        // Begin the transaction
+    // Replace the switch method
+    protected void displayDrawFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the contents of the container with the new fragment
-        ft.add(R.id.fragment, new CameraFragment(), "camera");
-        // Complete the changes added above
+        if (drawFragment.isAdded()) { // if the fragment is already in container
+            ft.show(drawFragment);
+        } else { // fragment needs to be added to frame container
+            ft.add(R.id.fragment_frame, drawFragment, "draw");
+        }
+        // Hide fragment B
+        if (cameraFragment.isAdded()) { ft.hide(cameraFragment); }
+        // Hide fragment C
+        if (textFragment.isAdded()) { ft.hide(textFragment); }
+        // Commit changes
         ft.commit();
-
     }
 
-    /** Called when the user taps the Camera button */
-    public void startTextFragment() {
-        // Do something in response to button
-
-        // Begin the transaction
+    // Replace the switch method
+    protected void displayCameraFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the contents of the container with the new fragment
-        ft.replace(R.id.fragment, new TextFragment());
-        // Complete the changes added above
+        if (cameraFragment.isAdded()) { // if the fragment is already in container
+            ft.show(cameraFragment);
+        } else { // fragment needs to be added to frame container
+            ft.add(R.id.fragment_frame, cameraFragment, "camera");
+        }
+        // Hide fragment B
+        if (drawFragment.isAdded()) { ft.hide(drawFragment); }
+        // Hide fragment C
+        if (textFragment.isAdded()) { ft.hide(textFragment); }
+        // Commit changes
         ft.commit();
+    }
 
+    // Replace the switch method
+    protected void displayTextFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (textFragment.isAdded()) { // if the fragment is already in container
+            ft.show(textFragment);
+        } else { // fragment needs to be added to frame container
+            ft.add(R.id.fragment_frame, textFragment, "text");
+        }
+        // Hide fragment B
+        if (drawFragment.isAdded()) { ft.hide(drawFragment); }
+        // Hide fragment C
+        if (cameraFragment.isAdded()) { ft.hide(cameraFragment); }
+        // Commit changes
+        ft.commit();
     }
 //
 //    @Override

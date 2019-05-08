@@ -6,16 +6,10 @@
     android:id="@+id/fragment_text"
     tools:context=".TextFragment">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Write a message: "></TextView>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp">
+        android:layout_marginTop="452dp">
 
         <EditText
             android:id="@+id/edit_message"
@@ -32,36 +26,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/just_read"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="just_read" />
-
-    <TextView
-        android:id="@+id/previous_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="previous content" />
-
-    <TextView
-        android:id="@+id/just_written"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="just written" />
-
-    <Button
-        android:id="@+id/btn-write-800"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Write 800" />
-
-    <TextView
-        android:id="@+id/time-to-write"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:hint="time to write" />
 
 </FrameLayout>
 
