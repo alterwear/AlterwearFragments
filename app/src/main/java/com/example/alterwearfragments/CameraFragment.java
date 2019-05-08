@@ -100,7 +100,8 @@ public class CameraFragment extends Fragment {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             Bitmap croppedPhoto;
 
-            if (photo.getWidth() >= photo.getHeight()){
+            // reference: https://stackoverflow.com/questions/6908604/android-crop-center-of-bitmap
+            if (photo.getWidth() >= photo.getHeight()) {
                 croppedPhoto = Bitmap.createBitmap(
                         photo,
                         photo.getWidth()/2 - photo.getHeight()/2,
@@ -108,8 +109,7 @@ public class CameraFragment extends Fragment {
                         photo.getHeight(),
                         photo.getHeight()
                 );
-
-            }else{
+            } else {
                 croppedPhoto = Bitmap.createBitmap(
                         photo,
                         0,

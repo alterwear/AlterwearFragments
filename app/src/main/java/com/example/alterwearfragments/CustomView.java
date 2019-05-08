@@ -72,10 +72,23 @@ public class CustomView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
 
         //create Bitmap of certain w,h
-        canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        // reference: https://stackoverflow.com/questions/6908604/android-crop-center-of-bitmap
+        if (w >= h) {
+            canvasBitmap = Bitmap.createBitmap(h, h, Bitmap.Config.ARGB_8888);
+        } else {
+            canvasBitmap = Bitmap.createBitmap(w, w, Bitmap.Config.ARGB_8888);
+        }
 
         //apply bitmap to graphic to start drawing.
         drawCanvas = new Canvas(canvasBitmap);
+    }
+
+    // reference: https://stackoverflow.com/questions/36728553/setting-view-height-dependent-on-its-width-in-android-in-layout-xml
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width = getMeasuredWidth();
+        setMeasuredDimension(width, width);
     }
 
     @Override
