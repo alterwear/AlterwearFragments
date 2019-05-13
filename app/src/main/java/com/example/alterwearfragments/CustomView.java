@@ -5,12 +5,17 @@ import android.graphics.Paint;
 import android.graphics.Canvas;
 import android.graphics.Bitmap;
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.MotionEvent;
 import android.graphics.Color;
 
 public class CustomView extends View {
+
+    //tag
+    private static final String TAG = "CustomView";
 
     //drawing path
     private Path drawPath;
@@ -26,13 +31,18 @@ public class CustomView extends View {
 
     //canvas - holding pen, holds your drawings
     //and transfers them to the view
-    private Canvas drawCanvas;
+    private static Canvas drawCanvas;
 
     //canvas bitmap
-    private Bitmap canvasBitmap;
+    private static Bitmap canvasBitmap;
+
+    //photo bitmap
+    private static Bitmap photoBitmap;
+    private static int photoWidth;
 
     //brush size
     private float currentBrushSize, lastBrushSize;
+
 
     public CustomView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -60,14 +70,31 @@ public class CustomView extends View {
         drawCanvas.drawColor(Color.WHITE);
     }
 
+    public static void setDrawBitmap(Bitmap bm) {
+        Log.e(TAG, "setDrawBitmap in custom view");
+        if (bm != null && bm != photoBitmap) {
+            photoBitmap = bm;
+
+            //apply bitmap to graphic to start drawing.
+            Rect bitmapFrame = new Rect(0, 0, photoWidth, photoWidth);
+            drawCanvas.drawBitmap(photoBitmap, null, bitmapFrame, null);
+//            drawCanvas.drawBitmap(photoBitmap, 0, 0, null);
+            Log.e(TAG, "set drawCanvas to photoBitmap in custom view");
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(canvasBitmap, 0 , 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
+        Log.e(TAG, "onDraw called in customView");
+
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        Log.e(TAG, "onSizeChanged in customView");
+
         //create canvas of certain device size.
         super.onSizeChanged(w, h, oldw, oldh);
 
@@ -88,6 +115,7 @@ public class CustomView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = getMeasuredWidth();
+        photoWidth = getMeasuredWidth();
         setMeasuredDimension(width, width);
     }
 

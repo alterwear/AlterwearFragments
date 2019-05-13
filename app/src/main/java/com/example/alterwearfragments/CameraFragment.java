@@ -133,6 +133,8 @@ public class CameraFragment extends Fragment {
             Utils.matToBitmap(edges, photo_edges);
 
             mImageView.setImageBitmap(photo_edges);
+
+            MainActivity.setCanvasBitmap(photo_edges);
         }
     }
 

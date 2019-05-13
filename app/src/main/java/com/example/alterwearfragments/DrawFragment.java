@@ -1,7 +1,10 @@
 package com.example.alterwearfragments;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.Button;
 public class DrawFragment extends Fragment {
 
     private static final String TAG = "draw";
+    private static Bitmap bitmap;
 
 
     public DrawFragment() {
@@ -48,4 +52,14 @@ public class DrawFragment extends Fragment {
             }
         });
     }
+
+    public void setDrawBitmap() {
+        final CustomView customView = getView().findViewById(R.id.customView);
+        Bitmap parentCanvasBitmap = MainActivity.getCanvasBitmap();
+        customView.setDrawBitmap(parentCanvasBitmap);
+        Log.d(TAG, "set draw bitmap from draw fragment to custom view");
+
+    }
+
+
 }

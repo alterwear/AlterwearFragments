@@ -1,5 +1,6 @@
 package com.example.alterwearfragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -19,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private CameraFragment cameraFragment;
     private TextFragment textFragment;
 
-    private Bitmap canvasBitmap;
+    public static Bitmap canvasBitmap;
+    private ImageView mImageView;
 
-    private TextView mTextMessage;
 
     private BottomNavigationView nav;
 
@@ -44,12 +46,19 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public static void setCanvasBitmap(Bitmap bm) {
+        canvasBitmap = bm;
+    }
+
+    public static Bitmap getCanvasBitmap() {
+        return canvasBitmap;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -67,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (drawFragment.isAdded()) { // if the fragment is already in container
             ft.show(drawFragment);
+            drawFragment.setDrawBitmap();
         } else { // fragment needs to be added to frame container
             ft.add(R.id.fragment_frame, drawFragment, "draw");
         }
@@ -109,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         // Commit changes
         ft.commit();
     }
-//
+
 //    @Override
 //    public void onNewIntent (final Intent intent) {
 //        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment);
