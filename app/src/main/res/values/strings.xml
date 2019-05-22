@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AlterwearApp</string>
+    <string name="app_name">AlterwearFragments</string>
     <string name="title_draw">Draw</string>
     <string name="title_camera">Camera</string>
     <string name="title_text">Text</string>
